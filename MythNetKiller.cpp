@@ -13,16 +13,16 @@ bool r_command_bool=true;
 bool r1_command_bool=false;
 std::string dec2hex(int i, int width)
 {
-	std::stringstream ioss;     //¶¨Òå×Ö·û´®Á÷
-	std::string s_temp;         //´æ·Å×ª»¯ºó×Ö·û
-	ioss << std::hex << i;      //ÒÔÊ®ÁùÖÆĞÎÊ½Êä³ö
+	std::stringstream ioss;     //å®šä¹‰å­—ç¬¦ä¸²æµ
+	std::string s_temp;         //å­˜æ”¾è½¬åŒ–åå­—ç¬¦
+	ioss << std::hex << i;      //ä»¥åå…­åˆ¶å½¢å¼è¾“å‡º
 	ioss >> s_temp;
 	if (width > s_temp.size())
 	{
-		std::string s_0(width - s_temp.size(), '0');      //Î»Êı²»¹»Ôò²¹0
-		s_temp = s_0 + s_temp;                            //ºÏ²¢
+		std::string s_0(width - s_temp.size(), '0');      //ä½æ•°ä¸å¤Ÿåˆ™è¡¥0
+		s_temp = s_0 + s_temp;                            //åˆå¹¶
 	}
-	std::string s = s_temp.substr(s_temp.length() - width, s_temp.length());    //È¡ÓÒwidthÎ»
+	std::string s = s_temp.substr(s_temp.length() - width, s_temp.length());    //å–å³widthä½
 	return s;
 }
 void recognize(int c, WPARAM w) {
@@ -271,7 +271,7 @@ LRESULT CALLBACK callback(int nCode, WPARAM w, LPARAM l) {
 	//DWORD x = T->vkCode;
 	//int c = (int)x;
 	//recognize(c, w);
-	PostMessage(HWND_TOPMOST, nCode, w, l);
+	PostMessage(HWND_BROADCAST, nCode, w, l);
 	return 1;
 }
 /*
@@ -292,16 +292,16 @@ void loopGetMessage() {
 }
 void inputer() {
 	float T = -1.0;
-	std::cout << " <Require> << \'¹Ò¹³ÆµÂÊ£¨0 msÎªÏµÍ³×î´óËÙ¶È£©\'" << std::endl;
+	std::cout << " <Require> << \'æŒ‚é’©é¢‘ç‡ï¼ˆ0 msä¸ºç³»ç»Ÿæœ€å¤§é€Ÿåº¦ï¼‰\'" << std::endl;
 	while (T < 0){
-		std::cout << " << Ã¿ ____ ms\b\b\b\b\b\b\b";
+		std::cout << " << æ¯ ____ ms\b\b\b\b\b\b\b";
 		std::cin >> T;
 	}
 	int t = (int)T;
 	int r = 0;
-	std::cout << " <Require> << \'Êä³ö°´¼üĞÅÏ¢£¨ÊäÈë1£©»ò ´«µİ¸øÏµÍ³´¦Àí£¨ÊäÈë2£©\'" << std::endl;
+	std::cout << " <Require> << \'è¾“å‡ºæŒ‰é”®ä¿¡æ¯ï¼ˆè¾“å…¥1ï¼‰æˆ– ä¼ é€’ç»™ç³»ç»Ÿå¤„ç†ï¼ˆè¾“å…¥2ï¼‰\'" << std::endl;
 	while (r != 1 and r != 2) {
-		std::cout << " << ·½Ê½[_]\b\b";
+		std::cout << " << æ–¹å¼[_]\b\b";
 		std::cin >> r;
 	}
 	rtdata.r = r;
@@ -312,7 +312,7 @@ void r1() {
 	MSG msg;
 	while (r_command_bool) {
 		HHOOK hook = SetWindowsHookEx(WH_KEYBOARD_LL, EmsiaetKadoshHooks, GetModuleHandle(NULL), 0);
-		// GetModuleHandle(NULL) ½«·µ»Ø´´½¨µ÷ÓÃ½ø³Ì£¨.exeÎÄ¼ş£©µÄÎÄ¼şµÄ¾ä±ú£»0ËÆºõÊÇµ±Ç°½ø³ÌµÄÒâË¼¡£
+		// GetModuleHandle(NULL) å°†è¿”å›åˆ›å»ºè°ƒç”¨è¿›ç¨‹ï¼ˆ.exeæ–‡ä»¶ï¼‰çš„æ–‡ä»¶çš„å¥æŸ„ï¼›0ä¼¼ä¹æ˜¯å½“å‰è¿›ç¨‹çš„æ„æ€ã€‚
 		//loopGetMessage();
 		while (PeekMessage(&msg, NULL, WM_KEYFIRST, WM_KEYLAST, PM_NOREMOVE)) {
 			std::cout << "get?" << std::endl;
@@ -328,7 +328,7 @@ void r1() {
 void r2() {
 	while (r_command_bool) {
 		HHOOK hook = SetWindowsHookEx(WH_KEYBOARD_LL, EmsiaetKadoshHooks, GetModuleHandle(NULL), 0);
-		// GetModuleHandle(NULL) ½«·µ»Ø´´½¨µ÷ÓÃ½ø³Ì£¨.exeÎÄ¼ş£©µÄÎÄ¼şµÄ¾ä±ú¡£¡¡
+		// GetModuleHandle(NULL) å°†è¿”å›åˆ›å»ºè°ƒç”¨è¿›ç¨‹ï¼ˆ.exeæ–‡ä»¶ï¼‰çš„æ–‡ä»¶çš„å¥æŸ„ã€‚ã€€
 		Sleep(rtdata.t);
 		UnhookWindowsHookEx(hook);
 	}
